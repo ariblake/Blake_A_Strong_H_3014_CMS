@@ -42,6 +42,7 @@
         <button name="submit">Submit</button>
     </form>
 
+    <a href="../index.php">Back to site</a>
 
 </body>
 </html>
