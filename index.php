@@ -40,6 +40,7 @@ if(isset($_GET['filter'])) {
         </div>
     <?php endwhile;?>
 
+    <?php include 'templates/footer.php';?>
     
 </body>
 </html>
