@@ -14,9 +14,9 @@
 <body>
     <h2>Welcome <?php echo $_SESSION['user_name'];?>!</h2>
 
-    <a href="admin_createuser.php">Create User</a>
-    <a href="admin_edituser.php">Edit User</a>
-    <a href="admin_deleteuser.php">Delete User</a>
+    <a href="admin_createproduct.php">Create Product</a>
+    <a href="admin_updateproduct.php">Update Product</a>
+    <a href="admin_deleteproduct.php">Delete Product</a>
     <a href="admin_logout.php">Sign Out</a>
     
 </body>
