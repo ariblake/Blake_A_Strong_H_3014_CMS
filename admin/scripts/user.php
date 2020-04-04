@@ -1,25 +1,26 @@
 <?php
-function createProduct($name, $description, $price, $image){
+
+function createUser($fname, $username, $password, $email){
     $pdo = Database::getInstance()->getConnection();
 
     //TODO: finish the below so that it can run a SQL query to create a new user with provided data
-    $create_product_query = 'INSERT INTO tbl_products(product_name, product_description, product_price, product_image)';
-    $create_product_query .= ' VALUES (:name, :description, :price, :image)';
+    $create_user_query = 'INSERT INTO tbl_user(user_fname, user_name, user_pass, user_email, user_ip)';
+    $create_user_query .= ' VALUES (:fname, :username, :password, :email, "no")';
 
-    $create_product_set = $pdo->prepare($create_product_query);
-    $create_product_result= $create_product_set->execute(
+    $create_user_set = $pdo->prepare($create_user_query);
+    $create_user_result= $create_user_set->execute(
         array(
-            ':name'=>$name,
-            ':description'=>$description,
-            ':price'=>$price,
-            ':image'=>$image,
+            ':fname'=>$fname,
+            ':username'=>$username,
+            ':password'=>$password,
+            ':email'=>$email,
         )
     );
     //TODO: redirect to index.php if create user successfully, otherwise return an error message
-    if($create_product_result){
+    if($create_user_result){
         redirect_to('index.php');
     }else{
-        return 'The product did not go through';
+        return 'The user did not go through';
     }
 
 }
@@ -43,15 +44,15 @@ function getSingleUser($id){
     }
 }
 
-function getAllProducts(){
+function getAllUsers(){
     $pdo = Database::getInstance()->getConnection();
 
-    $get_all_query = 'SELECT * FROM tbl_products';
-    $get_products_result = $pdo->query($get_all_query);
+    $get_all_query = 'SELECT * FROM tbl_user';
+    $get_users_result = $pdo->query($get_all_query);
 
     //TODO: if the execution is successful, return the user data, otherwise return an error message
-    if($get_products_result){
-        return $get_products_result;
+    if($get_users_result){
+        return $get_users_result;
     }else{
         return false;
     }
@@ -88,13 +89,13 @@ function editUser($id, $fname, $username, $password, $email){
     }
 }
 
-function deleteProduct($id){
+function deleteUser($id){
     //TODO: finish the function to delete the given user
     $pdo = Database::getInstance()->getConnection();
 
-    $delete_product_query = 'DELETE FROM tbl_products WHERE product_id = :id';
-    $delete_product_set = $pdo->prepare($delete_product_query);
-    $delete_product_result = $delete_product_set->execute(
+    $delete_user_query = 'DELETE FROM tbl_user WHERE user_id = :id';
+    $delete_user_set = $pdo->prepare($delete_user_query);
+    $delete_user_result = $delete_user_set->execute(
         array(
             ':id'=>$id,
         )
@@ -103,8 +104,8 @@ function deleteProduct($id){
     // If everything went through, redirect to admin_deleteuser.php
     // otherwise, return false
     //row count tells us how many rows are being affected by our sql query - we want to make sure it is actually affecting a user (could also do === 1)
-    if($delete_product_result && $delete_product_set->rowCount() > 0){
-        redirect_to('admin_deleteproduct.php');
+    if($delete_user_result && $delete_user_set->rowCount() > 0){
+        redirect_to('admin_deleteuser.php');
     }else{
         return false;
     }

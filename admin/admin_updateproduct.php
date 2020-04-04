@@ -4,20 +4,28 @@
     require_once '../load.php';
     confirm_logged_in();
 
-    $id = $_SESSION['user_id'];
-    $user = getSingleUser($id);
+    $category_table = 'tbl_category';
+    $categories = getAll($category_table);
 
-    if(is_string($user)){
-        $message = $user;
-    }
+    if(isset($_GET['id'])){
+        $id = $_GET['id'];
+        $tbl = 'tbl_products';
+        $col = 'product_id';
+        $getProduct = getSingleProduct($tbl, $col, $id);
 
-    if(isset($_POST['submit'])){
-        $fname = trim($_POST['fname']);
-        $username = trim($_POST['username']);
-        $password = trim($_POST['password']);
-        $email = trim($_POST['email']);
-
-        $message = editUser($id, $fname, $username, $password, $email);
+        if(isset($_POST['submit'])){
+            $product = array(
+                'id' => $id,
+                'name' => trim($_POST['product_name']),
+                'description' => trim($_POST['product_description']),
+                'price' => trim($_POST['product_price']),
+                'image' => $_FILES['product_image'],
+                'category' => trim($_POST['product_category'])
+            );
+        
+            $result = updateProduct($product);
+            $message = $result;
+        }
     }
 ?>
 
@@ -30,23 +38,37 @@
 </head>
 <body>
     <h2>Update Product</h2>
-    <?php echo !empty($message)? $message : '';?>
-    <form action="admin_updateproduct.php" method="post">
-        <?php while($info = $user->fetch(PDO::FETCH_ASSOC)): ?>
-        <label>Product Name:</label>
-        <input type="text" name="fname" value="<?php echo $info['user_fname'];?>"><br><br>
+    <!--  -->
+    <?php if(!is_string($getProduct)):?>
+        <?php while($row = $getProduct->fetch(PDO::FETCH_ASSOC)):?>
+            <form action="admin_updateproduct.php" method="post" enctype="multipart/form-data">
+                <label>Product Name:</label>
+                <input type="text" name="product_name" value="<?php echo $row['product_name'];?>"><br><br>
 
-        <label>Product Description:</label>
-        <input type="text" name="username" value="<?php echo $info['user_name'];?>"><br><br>
+                <label>Product Description:</label>
+                <textarea name="product_description"><?php echo $row['product_description'];?></textarea><br><br>
 
-        <label>Product Price:</label>
-        <input type="text" name="password" value="<?php echo $info['user_pass'];?>"><br><br>
+                <label>Product Price:</label>
+                <input type="text" name="product_price" value="<?php echo $row['product_price'];?>"><br><br>
 
-        <label>Product Image:</label>
-        <input type="text" name="email" value="<?php echo $info['user_email'];?>"><br><br>
+                <label>Product Image:</label>
+                <input type="file" name="product_image" value="<?php echo $row['product_image'];?>"><br><br>
 
+                <label>Product Category:</label><br>
+                <select name="product_category">
+                    <?php while ($row = $categories->fetch(PDO::FETCH_ASSOC)): ?>
+                        <option value="<?php echo $row['category_id'];?>"><?php echo $row['category'];?></option>
+                    <?php endwhile;?>
+                </select><br><br>
+
+                <button type="submit" name="submit">Update Product</button>
+            </form>
+
+            <a href="index.php">Back to Home</a>
         <?php endwhile;?>
-        <button type="submit" name="submit">Update Product</button>
-    </form>
+    <?php endif;?>
+
+
+    
 </body>
 </html>
