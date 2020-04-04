@@ -14,10 +14,21 @@
 <body>
     <h2>Welcome <?php echo $_SESSION['user_name'];?>!</h2>
 
-    <a href="admin_createuser.php">Create User</a>
-    <a href="admin_edituser.php">Edit User</a>
-    <a href="admin_deleteuser.php">Delete User</a>
+    <h3>Product Settings</h3>
+    <ul>
+        <li><a href="admin_createproduct.php">Create a Product</a></li>
+        <li><a href="admin_deleteproduct.php">Update or Delete a Product</a></li>
+    </ul>
+
+    <h3>User Settings</h3>
+    <ul>
+        <li><a href="admin_createuser.php">Create User</a></li>
+        <li><a href="admin_edituser.php">Edit User</a></li>
+        <li><a href="admin_deleteuser.php">Delete User</a></li>
+    </ul>
+
     <a href="admin_logout.php">Sign Out</a>
+    <a href="../index.php">Back to Site</a>
     
 </body>
 </html>

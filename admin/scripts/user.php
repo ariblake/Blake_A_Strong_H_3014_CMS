@@ -1,4 +1,5 @@
 <?php
+
 function createUser($fname, $username, $password, $email){
     $pdo = Database::getInstance()->getConnection();
 
