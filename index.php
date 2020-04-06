@@ -29,18 +29,26 @@ if(isset($_GET['filter'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Sportchek CMS</title>
+    <link rel="stylesheet" href="css/main.css">
 </head>
 <body>
-    <?php include 'templates/header.php';?>
+    <main>
+        <?php include 'templates/header.php';?>
 
-    <?php while($row = $getProducts->fetch(PDO::FETCH_ASSOC)):?>
-        <div class="product-item">
-            <img src="images/<?php echo $row['product_image'];?>" alt="<?php echo $row['product_name'];?>">
-            <h2><?php echo $row['product_name'];?></h2>
+        <div class="products">
+        <?php while($row = $getProducts->fetch(PDO::FETCH_ASSOC)):?>
+            <div class="product-item">
+                <img src="images/<?php echo $row['product_image'];?>" alt="<?php echo $row['product_name'];?>" width=300px>
+                <h2><?php echo $row['product_name'];?></h2>
+                <p><?php echo $row['product_description'];?></p>
+                <h4><?php echo $row['product_price'];?></h4>
+                
+            </div>
+        <?php endwhile;?>
         </div>
-    <?php endwhile;?>
 
-    <?php include 'templates/footer.php';?>
+        <?php include 'templates/footer.php';?>
+    </main>
     
 </body>
 </html>

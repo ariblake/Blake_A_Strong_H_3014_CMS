@@ -1,4 +1,4 @@
 <footer>
-    This is the new footer <br> Copyright <?php echo date('Y');?>
+    <p>Copyright <?php echo date('Y');?></p>
     <a href="admin/admin_login.php">Admin Login</a>
 </footer>
